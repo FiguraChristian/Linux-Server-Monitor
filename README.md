@@ -1,6 +1,12 @@
 # Linux Server Monitor
 Ein automatisiertes Monitoring-Tool, das RAM, CPU und Festplattenauslastung eines Linux-Servers überwacht und bei Überschreitung kritischer Schwellenwerte automatisch eine Warn-E-Mail versendet.
 
+<img width="960" height="253" alt="image" src="https://github.com/user-attachments/assets/4e62a086-c61c-4ae8-b607-d6265dea6c08" />
+
+
+
+
+
 # Hauptfunktionen
 - RAM-Monitoring: Überwacht die Arbeitsspeicherauslastung in Echtzeit
 - CPU-Monitoring: Erkennt kritische Prozessorauslastung
