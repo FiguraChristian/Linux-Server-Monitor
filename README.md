@@ -23,3 +23,4 @@ Ein automatisiertes Monitoring-Tool, das RAM, CPU und Festplattenauslastung eine
 - smtplib (E-Mail-Versand via Gmail SMTP)
 - python-dotenv (für die sichere Verwendung meiner privaten informationen)
 - Service Now (Enterprise Tickettool) 
+- MS Visual Studio Code (IDE) mit SSHPlugIn für den virtualsierten Ubuntu Server 
