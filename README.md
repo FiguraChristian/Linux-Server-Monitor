@@ -21,6 +21,6 @@ Ein automatisiertes Monitoring-Tool, das RAM, CPU und Festplattenauslastung eine
 - Python 3
 - psutil (Systemressourcen-Auslesen)
 - smtplib (E-Mail-Versand via Gmail SMTP)
-- python-dotenv (für die sichere Verwendung meiner privaten informationen)
+- python-dotenv (Credential-Management via .env)
 - Service Now (Enterprise Tickettool) 
 - MS Visual Studio Code (IDE) mit SSHPlugIn für den virtualsierten Ubuntu Server 
