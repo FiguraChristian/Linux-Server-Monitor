@@ -5,15 +5,14 @@ from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import requests
 
-# Braucht für Cronjob kompletten Pfad, weil Skript sonst im Userkontext läuft und nicht funktioniert
+# hard path needed for cron job
 load_dotenv("/home/christian/projekte/homelab/monitoring/.env")
 
-# Credentials befinden sich in separater .env file
-## Gmail
+# get GMAIL Credentials from .env
 mail_adress = os.getenv("mail_adress")
 gmail_password = os.getenv("gmail_app_password")
 
-## Service Now
+# get Service Now Credentials from .env
 sn_dev_instanz = os.getenv("SN_URL")
 sn_dev_username = os.getenv("SN_UN")
 sn_dev_pw = os.getenv("SN_PW")
@@ -31,28 +30,27 @@ headers = {
 }
 
 
-# Achtung, disk_usage braucht Pfad, daher "/", um gesamte Platte zu prüfen
+# disk_usage needs path, so "/" (from root)
 hostname = os.uname().nodename
 used_ram = psutil.virtual_memory().percent
 used_cpu = psutil.cpu_percent()
 used_disk_space = psutil.disk_usage("/").percent
 
 
-# Funktion für Aufbau der Mail
+# Function Mail
 def send_alert(text):
     msg = MIMEText(text)
     msg["To"] = mail_adress
     msg["From"] = mail_adress
     msg["Subject"] = "Ubuntu Server Alert"
 
-    
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(mail_adress, gmail_password)
         server.send_message(msg)
 
 
 
-# Funktion für INC-Erstellung im Service Now
+# Function INC creation with few parameters
 def create_incident(inc_description):
 
     incident_data = {
@@ -61,16 +59,21 @@ def create_incident(inc_description):
     "assignment_group" : "d625dccec0a8016700a222a0f7900d06 "
 }
 
-    # Send Requests all INC
+    # Post Requests INC
     inc_response = requests.post(target_path, auth=(sn_dev_username,sn_dev_pw), headers=headers, json=incident_data)
 
+    if inc_response.status_code == 201:
+        print("Incident erfolgreich erstellt")
+    else:
+        print(f"Fehler bei INC-Erstellung: {inc_response.status_code}")
 
 
+# Function Error exception
 def error_message():
     print("Es ist ein Fehler aufgetreten")
 
 
-# Definieren von kritischen Schwellwerten für RAM, CPU und Disk
+# Set critical limits for RAM, CPU and Disk Space
 if used_ram > 90:
     try:
         send_alert(f"RAM-Auslastung kritisch: {used_ram} %")
@@ -93,6 +96,3 @@ if used_disk_space > 85:
 
     except:
         error_message()
-
-
-
