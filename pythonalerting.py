@@ -66,13 +66,17 @@ def create_incident(inc_description):
 
 
 
+def error_message():
+    print("Es ist ein Fehler aufgetreten")
+
+
 # Definieren von kritischen Schwellwerten für RAM, CPU und Disk
 if used_ram > 90:
     try:
         send_alert(f"RAM-Auslastung kritisch: {used_ram} %")
         create_incident(f"{hostname} RAM-Auslastung kritisch: {used_ram} %")
     except:
-        print("Es ist ein fehler aufgetreten")
+        error_message()
 
 if used_cpu > 90:
     try:
@@ -80,7 +84,7 @@ if used_cpu > 90:
         create_incident(f"{hostname} CPU-Auslastung kritisch: {used_cpu} %")
 
     except:
-        print("Es ist ein fehler aufgetreten")
+        error_message()
 
 if used_disk_space > 85:
     try:
@@ -88,7 +92,7 @@ if used_disk_space > 85:
         create_incident(f"{hostname} Speicherplatz kritisch: {used_disk_space} %")
 
     except:
-        print("Es ist ein fehler aufgetreten")
+        error_message()
 
 
 
